@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>KAVARO — Coffee & Beyond</title>
+    <meta name="description" content="KAVARO — Coffee & Beyond. Переходьте в наш Instagram або залиште відгук у Google!">
+    <meta name="theme-color" content="#0a0a0c">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #08080a;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --card-bg-hover: rgba(255, 255, 255, 0.09);
+            --card-border: rgba(255, 255, 255, 0.08);
+            --card-border-hover: rgba(212, 175, 55, 0.35);
+            --text-primary: #ffffff;
+            --text-secondary: #8e8e93;
+            --text-subtitle: #b0b0b8;
+            --accent-gold: #d4af37;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            min-height: 100vh;
+            min-height: 100dvh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
+        }
+
+        /* Головний контейнер у форматі мобільного екрана */
+        .page-wrapper {
+            width: 100%;
+            max-width: 440px;
+            min-height: 100vh;
+            min-height: 100dvh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            background-color: var(--bg-color);
+            box-shadow: 0 0 60px rgba(0, 0, 0, 0.9);
+        }
+
+        /* Верхній банер із тим самим фото та плавним затемненням донизу */
+        .hero-banner {
+            position: relative;
+            width: 100%;
+            height: 250px;
+            overflow: hidden;
+            background: #141210;
+        }
+
+        .hero-banner-bg {
+            position: absolute;
+            inset: 0;
+            background-image: url('ава.jpg');
+            background-size: cover;
+            background-position: center;
+            filter: blur(2px) brightness(0.75) contrast(1.05);
+            transform: scale(1.06);
+            animation: slowZoom 14s ease-in-out infinite alternate;
+        }
+
+        /* Додаткове тепле свічення поверх банера */
+        .hero-banner::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 50% 35%, rgba(212, 175, 55, 0.18), transparent 70%);
+            z-index: 1;
+        }
+
+        /* Градієнт переходу банера в чорний фон (як на референсі Wisty) */
+        .hero-banner::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                180deg,
+                rgba(8, 8, 10, 0.15) 0%,
+                rgba(8, 8, 10, 0.45) 50%,
+                rgba(8, 8, 10, 0.92) 85%,
+                var(--bg-color) 100%
+            );
+            z-index: 2;
+        }
+
+        @keyframes slowZoom {
+            0% { transform: scale(1.05); }
+            100% { transform: scale(1.14); }
+        }
+
+        /* Секція профілю з круглою аватаркою */
+        .profile-section {
+            position: relative;
+            z-index: 5;
+            margin-top: -64px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 0 24px;
+            animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .avatar-ring {
+            width: 112px;
+            height: 112px;
+            border-radius: 50%;
+            padding: 3px;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.65), rgba(255, 255, 255, 0.15), rgba(212, 175, 55, 0.4));
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.75), 0 0 25px rgba(212, 175, 55, 0.15);
+            margin-bottom: 16px;
+        }
+
+        .avatar-circle {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background-color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border: 3px solid var(--bg-color);
+        }
+
+        .avatar-circle img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            padding: 6px;
+            background-color: #ffffff;
+        }
+
+        .profile-name {
+            font-size: 25px;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .profile-handle {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: 6px;
+        }
+
+        .profile-bio {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-subtitle);
+            letter-spacing: 0.03em;
+        }
+
+        /* Список прямокутних кнопок-перехідників */
+        .links-list {
+            position: relative;
+            z-index: 5;
+            width: 100%;
+            padding: 28px 20px 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .link-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            padding: 16px 18px;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 18px;
+            text-decoration: none;
+            color: var(--text-primary);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+                        background 0.2s ease,
+                        border-color 0.2s ease,
+                        box-shadow 0.2s ease;
+            opacity: 0;
+            animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .link-card:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .link-card:nth-child(2) {
+            animation-delay: 0.18s;
+        }
+
+        .link-card:hover {
+            background: var(--card-bg-hover);
+            border-color: var(--card-border-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 28px rgba(0, 0, 0, 0.45);
+        }
+
+        .link-card:active {
+            transform: scale(0.98);
+            background: rgba(255, 255, 255, 0.11);
+        }
+
+        .link-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            min-width: 0;
+        }
+
+        .link-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .link-icon svg {
+            width: 22px;
+            height: 22px;
+        }
+
+        .link-text {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            min-width: 0;
+        }
+
+        .link-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-primary);
+            line-height: 1.25;
+        }
+
+        .link-subtitle {
+            font-size: 13px;
+            font-weight: 400;
+            color: var(--text-secondary);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .link-arrow {
+            color: rgba(255, 255, 255, 0.35);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            margin-left: 12px;
+            transition: transform 0.2s ease, color 0.2s ease;
+        }
+
+        .link-card:hover .link-arrow {
+            transform: translateX(3px);
+            color: rgba(255, 255, 255, 0.75);
+        }
+
+        /* Невеликий футер знизу */
+        .footer {
+            margin-top: auto;
+            padding: 20px;
+            text-align: center;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.25);
+            letter-spacing: 0.04em;
+        }
+
+        @keyframes fadeUp {
+            0% {
+                opacity: 0;
+                transform: translateY(16px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <main class="page-wrapper">
+        <!-- Верхній банер з тією ж аватаркою -->
+        <div class="hero-banner">
+            <div class="hero-banner-bg"></div>
+        </div>
+
+        <!-- Кругла аватарка та опис профілю -->
+        <section class="profile-section">
+            <div class="avatar-ring">
+                <div class="avatar-circle">
+                    <img src="ава.jpg" alt="KAVARO Logo">
+                </div>
+            </div>
+            <h1 class="profile-name">KAVARO</h1>
+            <p class="profile-handle">@kavarocoffee</p>
+            <p class="profile-bio">COFFEE &amp; BEYOND</p>
+        </section>
+
+        <!-- Прямокутні картки-перехідники -->
+        <section class="links-list">
+            <!-- Instagram -->
+            <a class="link-card" href="https://www.instagram.com/kavarocoffee?psln=MWlrNDI2YTExOTRwbw==" target="_blank" rel="noopener noreferrer">
+                <div class="link-left">
+                    <div class="link-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                        </svg>
+                    </div>
+                    <div class="link-text">
+                        <span class="link-title">Instagram</span>
+                        <span class="link-subtitle">@kavarocoffee</span>
+                    </div>
+                </div>
+                <div class="link-arrow">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </div>
+            </a>
+
+            <!-- Google Відгук -->
+            <a class="link-card" href="https://search.google.com/local/writereview?placeid=ChIJaTozZsNdLUcRDs73qvjNXWU" target="_blank" rel="noopener noreferrer">
+                <div class="link-left">
+                    <div class="link-icon">
+                        <svg viewBox="0 0 24 24" fill="none">
+                            <path d="M21.8055 10.0415H21V10H12V14H17.6515C16.827 16.3285 14.6115 18 12 18C8.6865 18 6 15.3135 6 12C6 8.6865 8.6865 6 12 6C13.5295 6 14.921 6.577 15.9805 7.5195L18.809 4.691C17.023 3.0265 14.634 2 12 2C6.4775 2 2 6.4775 2 12C2 17.5225 6.4775 22 12 22C17.5225 22 22 17.5225 22 12C22 11.3295 21.931 10.675 21.8055 10.0415Z" fill="#ffffff" fill-opacity="0.9"/>
+                        </svg>
+                    </div>
+                    <div class="link-text">
+                        <span class="link-title">Залишити відгук у Google</span>
+                        <span class="link-subtitle">Оцініть нас на Google Картах ⭐</span>
+                    </div>
+                </div>
+                <div class="link-arrow">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </div>
+            </a>
+        </section>
+
+        <footer class="footer">
+            KAVARO • NFC Tap Link
+        </footer>
+    </main>
+
+</body>
+</html>
